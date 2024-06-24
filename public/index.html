@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Signer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="login-container">
+        <img src="logo.png" alt="Logo" id="logo">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="login-btn">Login</button>
+        <p id="login-error" style="color: red; display: none;">Invalid username or password</p>
+    </div>
+    <div id="pdf-container" style="display: none;">
+        <h1>PDF Signer</h1>
+        <input type="file" id="file-input" accept="application/pdf">
+        <div id="pdf-pages"></div>
+        <button id="save-btn" style="display:none;">Save PDF</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
