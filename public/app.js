@@ -111,14 +111,19 @@ document.addEventListener('DOMContentLoaded', function () {
         signatureCanvas.addEventListener('mousedown', startDrawing.bind(null, signatureCtx));
         signatureCanvas.addEventListener('mouseup', stopDrawing);
         signatureCanvas.addEventListener('mousemove', draw.bind(null, signatureCtx));
+        signatureCanvas.addEventListener('touchstart', startDrawing.bind(null, signatureCtx));
+        signatureCanvas.addEventListener('touchend', stopDrawing);
+        signatureCanvas.addEventListener('touchmove', draw.bind(null, signatureCtx));
     }
 
     function togglePenMode() {
         penEnabled = !penEnabled;
         if (penEnabled) {
             togglePenBtn.textContent = 'Disable Pen';
+            document.body.style.overflow = 'hidden'; // Disable scrolling
         } else {
             togglePenBtn.textContent = 'Enable Pen';
+            document.body.style.overflow = 'auto'; // Enable scrolling
         }
     }
 
@@ -186,8 +191,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function startDrawing(ctx, event) {
         if (!penEnabled) return;
         isDrawing = true;
+        const { offsetX, offsetY } = event.touches ? event.touches[0] : event;
         ctx.beginPath();
-        ctx.moveTo(event.offsetX, event.offsetY);
+        ctx.moveTo(offsetX, offsetY);
     }
 
     function stopDrawing() {
@@ -196,7 +202,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function draw(ctx, event) {
         if (!isDrawing) return;
-        ctx.lineTo(event.offsetX, event.offsetY);
+        event.preventDefault();
+        const { offsetX, offsetY } = event.touches ? event.touches[0] : event;
+        ctx.lineTo(offsetX, offsetY);
         ctx.stroke();
     }
 });
