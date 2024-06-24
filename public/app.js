@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startDrawing(ctx, event) {
         if (!penEnabled) return;
         isDrawing = true;
-        const { offsetX, offsetY } = event.touches ? event.touches[0] : event;
+        const { offsetX, offsetY } = getEventOffset(event, ctx.canvas);
         ctx.beginPath();
         ctx.moveTo(offsetX, offsetY);
     }
@@ -203,8 +203,21 @@ document.addEventListener('DOMContentLoaded', function () {
     function draw(ctx, event) {
         if (!isDrawing) return;
         event.preventDefault();
-        const { offsetX, offsetY } = event.touches ? event.touches[0] : event;
+        const { offsetX, offsetY } = getEventOffset(event, ctx.canvas);
         ctx.lineTo(offsetX, offsetY);
         ctx.stroke();
+    }
+
+    function getEventOffset(event, canvas) {
+        if (event.touches) {
+            const touch = event.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            return {
+                offsetX: touch.clientX - rect.left,
+                offsetY: touch.clientY - rect.top
+            };
+        } else {
+            return event;
+        }
     }
 });

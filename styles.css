@@ -55,9 +55,22 @@ body {
     margin-top: 20px;
 }
 
+#toolbar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    padding: 10px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
 .pdf-page {
     position: relative;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .signature-canvas {
@@ -73,16 +86,28 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 20px;
+    margin: 10px;
 }
 
 #save-btn:hover, #toggle-pen-btn:hover {
     background-color: #45a049;
 }
 
-.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+@media (max-width: 768px) {
+    #pdf-container {
+        padding: 10px;
+    }
+
+    .pdf-page {
+        margin-bottom: 10px;
+    }
+
+    #toolbar {
+        padding: 5px;
+    }
+
+    #save-btn, #toggle-pen-btn {
+        padding: 8px 16px;
+        margin: 5px;
+    }
 }
