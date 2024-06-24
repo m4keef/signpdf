@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginError = document.getElementById('login-error');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
+    const togglePenBtn = document.getElementById('toggle-pen-btn');
+    let penEnabled = false;
 
     loginBtn.addEventListener('click', function () {
         const username = usernameInput.value;
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.getElementById('file-input').addEventListener('change', handleFileUpload);
+    togglePenBtn.addEventListener('click', togglePenMode);
 
     let pdfDoc = null;
     let scale = 1.5;
@@ -110,6 +113,15 @@ document.addEventListener('DOMContentLoaded', function () {
         signatureCanvas.addEventListener('mousemove', draw.bind(null, signatureCtx));
     }
 
+    function togglePenMode() {
+        penEnabled = !penEnabled;
+        if (penEnabled) {
+            togglePenBtn.textContent = 'Disable Pen';
+        } else {
+            togglePenBtn.textContent = 'Enable Pen';
+        }
+    }
+
     async function savePDF() {
         const pdfLib = window.PDFLib;
         const existingPdfBytes = await pdfDoc.getData();
@@ -172,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let isDrawing = false;
 
     function startDrawing(ctx, event) {
+        if (!penEnabled) return;
         isDrawing = true;
         ctx.beginPath();
         ctx.moveTo(event.offsetX, event.offsetY);
